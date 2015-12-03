@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <title>Workout Sessions Page</title>
+    <link rel="stylesheet" href="/js/script.js"
+</head>
+<body>
+<h1>Hello {{name}} Here is your workout information!</h1>
+<h2>You have {{toDoCount}} workout sessions.</h2>
+<form method="post">
+    Exercise Name: <input type="text" name="name" id="name">
+    Reps Count: <input type="text" name="reps" id="name">
+    Weight: <input type="text" name="weight" id="name">
+    Date: <input type="text" name="date" id="name">
+    Lbs or Kgs: <input type="text" name="lbs" id="name">
+    <input type="submit" name="Add Item" value="Add Item">
+</form>
+
+
+  <table>
+    <tr>
+        <th>Name</th>
+        <th>Reps</th>
+        <th>Weight</th>
+        <th>Date</th>
+        <th>Lbs</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {{#if toDo}}
+      {{#each toDo}}
+        <tr>
+            <th>{{this.name}}</th>
+            <th>{{this.reps}}</th>
+            <th>{{this.weight}}</th>
+            <th>{{this.date}}</th>
+            <th>{{this.lbs}}</th>
+            <th><form method="post">
+                <input type="hidden" name="id" value="{{this.id}}">
+                <input type="submit" name="Done" value="Update">
+            </form></th>
+            <th><form method="post">
+                <input type="hidden" name="id" value="{{this.id}}">
+                <input type="submit" name="Done" value="Delete">
+            </form></th>
+        </tr>
+      {{/each}}
+    {{/if}}
+  </table>
+
+
+</body>
+</html>
