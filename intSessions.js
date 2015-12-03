@@ -6,7 +6,9 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(session({secret:'SuperSecretPassword'}));
+app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -28,6 +30,7 @@ app.get('/',function(req,res,next){
 
 app.post('/',function(req,res){
   var context = {};
+  console.log(req.body)
 
   if(req.body['New List']){
     req.session.name = req.body.name;
@@ -44,6 +47,7 @@ app.post('/',function(req,res){
   if(req.body['Add Item']){
     req.session.toDo.push({"name":req.body.name, "id":req.session.curId});
     req.session.curId++;
+    console.log(req);
   }
 
   if(req.body['Done']){
@@ -58,6 +62,30 @@ app.post('/',function(req,res){
   console.log(context.toDo);
   res.render('toDo',context);
 });
+
+
+app.get('/',function(req,res,next){
+  var context = {};
+  //If there is no session, go to the main page.
+  if(!req.session.name){
+    res.render('newSession', context);
+    return;
+  }
+  context.name = req.session.name;
+  context.toDoCount = req.session.toDo.length || 0;
+  context.toDo = req.session.toDo || [];
+  console.log(context.toDo);
+  res.render('toDo',context);
+});
+
+app.post('/addRow',function(req,res){
+  res.type('text/plain');
+  var context = {};
+  console.log("hi");
+  console.log(req.body);
+  res.send('OK');
+});
+
 
 app.use(function(req,res){
   res.status(404);

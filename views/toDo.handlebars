@@ -2,18 +2,20 @@
 <html>
 <head>
     <title>Workout Sessions Page</title>
-    <link rel="stylesheet" href="/js/script.js"
-</head>
+    <script src="/js/script.js"></script>
 <body>
 <h1>Hello {{name}} Here is your workout information!</h1>
 <h2>You have {{toDoCount}} workout sessions.</h2>
-<form method="post">
-    Exercise Name: <input type="text" name="name" id="name">
-    Reps Count: <input type="text" name="reps" id="name">
-    Weight: <input type="text" name="weight" id="name">
-    Date: <input type="text" name="date" id="name">
-    Lbs or Kgs: <input type="text" name="lbs" id="name">
-    <input type="submit" name="Add Item" value="Add Item">
+<form >
+    <fieldset>
+        <legend>Enter New Workout</legend>
+        Exercise Name: <input type="text" name="name" id="name">
+        Reps Count: <input type="text" name="reps" id="reps">
+        Weight: <input type="text" name="weight" id="weight">
+        Date: <input type="text" name="date" id="date">
+        Lbs or Kgs: <input type="text" name="lbs" id="lbs">
+        <input type="submit" id="AddRow">
+    </fieldset>
 </form>
 
 
