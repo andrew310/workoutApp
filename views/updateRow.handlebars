@@ -5,14 +5,15 @@
     <script src="/js/script.js"></script>
 <body>
 <h1>Hello, Please update the workout session below:</h1>
-<form >
+<form action="/update" method="post">
     <fieldset>
         <legend>Update Workout</legend>
-        Exercise Name: <input type="text" name="name" value="{{name}}" id="name">
-        Reps Count: <input type="text" name="reps" value="{{reps}}" id="reps">
-        Weight: <input type="text" name="weight" value="{{weight}}" id="weight">
-        Date: <input type="text" name="date" value="{{date}}" id="date">
-        Lbs or Kgs: <input type="text" name="lbs"{{lbs}} id="lbs">
+        Exercise Name: <input type="text" name="name" value="{{results.name}}" id="name">
+        Reps Count: <input type="text" name="reps" value="{{results.reps}}" id="reps">
+        Weight: <input type="text" name="weight" value="{{results.weight}}" id="weight">
+        Date: <input type="text" name="date" value="{{results.date}}" id="date">
+        Lbs or Kgs: <input type="text" name="lbs" value="{{results.lbs}}" id="lbs">
+        <input value="{{results.id}}" type="hidden" name="id">
         <input type="submit" id="updateRow">
     </fieldset>
 </form>

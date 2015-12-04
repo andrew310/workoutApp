@@ -38,7 +38,7 @@
                     <th>{{this.lbs}}</th>
                     <th><input type="button" value="delete" onclick="deleteRow('workoutNav',this, {{this.id}} )" /></th>
                     <th><form action="/update" method="get">
-                        <input id="{{this.id}}" type="hidden" name="changeData">
+                        <input value="{{this.id}}" type="hidden" name="changeData">
                         <input type="submit" value="update">
                     </form></th>
                 </tr>

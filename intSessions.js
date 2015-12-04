@@ -69,7 +69,7 @@ app.post('/',function(req,res){
   }
 
   context.username = req.session.username;
-  pool.query('SELECT * FROM workout', function(err, rows, fields) {
+  pool.query('SELECT *,  DATE_FORMAT(workoutDate,\'%Y-%m-%d\') AS date FROM workout', function(err, rows, fields) {
     if (err) {
       next(err);
       return;
@@ -103,9 +103,45 @@ app.post('/addRow',function(req,res, next){
 });
 
 //update handler, receives uniqueID from AJAX
-app.get('/update',function(req,res){
-  res.render('updateRow');
+app.get('/update',function(req,res, next){
+  console.log(req.query.changeData);
+  var context = {};
+  pool.query('SELECT *, DATE_FORMAT(workoutDate,\'%Y-%m-%d\') AS date FROM workout WHERE id=?',[req.query.changeData], function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+    context.results = rows[0];
+    console.log(context);
+    res.render('updateRow', context);
+  });
 });
+
+app.post('/update',function(req,res, next){
+  console.log(req.body);
+  var context = {};
+  pool.query('UPDATE workout SET name=?, reps=?, weight=?, workoutDate=?, lbs=? WHERE id=?',[req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.lbs, req.body.id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+    console.log(result);
+  });
+
+
+  pool.query('SELECT *, DATE_FORMAT(workoutDate,\'%Y-%m-%d\') AS date FROM workout', function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+    context.username = req.session.name;
+    context.results = rows;
+    console.log(context);
+    res.render('toDo', context);
+  });
+
+});
+
 
 //deleteRow handler, receives uniqueID from AJAX
 app.post('/deleteRow',function(req,res, next){
