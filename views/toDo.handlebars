@@ -36,6 +36,8 @@
                     <th>{{this.weight}}</th>
                     <th>{{this.date}}</th>
                     <th>{{this.lbs}}</th>
+                    <th><input type="button" value="delete" onclick="deleteRow('workoutNav',this, {{this.id}} )" /></th>
+                    <th><input type="button" value="update" onclick="deleteRow('workoutNav',this, {{this.id}} )" /></th>
                 </tr>
             {{/each}}
         {{/if}}

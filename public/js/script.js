@@ -56,7 +56,7 @@ function bindButton(){
         cell4.innerHTML = results.date;
         cell5.innerHTML = results.lbs;
         cell6.innerHTML = "<input type=\"button\" value=\"delete\" onclick=\"deleteRow(\'workoutNav\',this, " + results.id +")\" />";
-        cell7.innerHTML = "<input type=\"button\" value=\"Delete\" onclick=\"\" />";
+        cell7.innerHTML = "<input type=\"button\" value=\"update\" onclick=\"deleteRow(\'workoutNav\',this, " + results.id +")\" />";
 
         //document.getElementById('echofName').textContent = results.json.name;
         //document.getElementById('echolName').textContent = results.json.reps;
