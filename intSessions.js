@@ -13,30 +13,33 @@ app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 3020);
+app.set('port', 3000);
 
 //connect to database
 var mysql = require('mysql');
 var pool = mysql.createPool({
   host  : 'localhost',
-  user  : 'student',
+  user  : 'test',
   password: 'default',
-  database: 'student'
+  database: 'test'
 });
+
+
 
 //set up the table
 app.get('/reset-table',function(req,res,next){
   var context = {};
-  mysql.pool.query("DROP TABLE IF EXISTS todo", function(err){
-    var createString = "CREATE TABLE todo(" +
+  pool.query("DROP TABLE IF EXISTS workout", function(err){
+    var createString = "CREATE TABLE workout(" +
         "id INT PRIMARY KEY AUTO_INCREMENT," +
         "name VARCHAR(255) NOT NULL," +
-        "reps int," +
-        "weight int," +
-        "date DATE," +
+        "reps INT," +
+        "weight INT," +
+        "workoutDate DATE," +
         "lbs BOOLEAN)";
-    mysql.pool.query(createString, function(err){
+    pool.query(createString, function(err){
       context.results = "Table reset";
+      console.log("table reset");
       res.render('home',context);
     })
   });
@@ -52,8 +55,7 @@ app.get('/',function(req,res,next){
     return;
   }
   context.name = req.session.name;
-  context.toDoCount = req.session.toDo.length || 0;
-  context.toDo = req.session.toDo || [];
+
   console.log(context.toDo);
   res.render('toDo',context);
 });
@@ -63,57 +65,41 @@ app.post('/',function(req,res){
   console.log(req.body)
 
   if(req.body['New List']){
-    req.session.name = req.body.name;
-    req.session.toDo = [];
-    req.session.curId = 0;
+    req.session.username = req.body.name;
   }
 
-  //If there is no session, go to the main page.
-  if(!req.session.name){
-    res.render('newSession', context);
-    return;
-  }
-
-  if(req.body['Add Item']){
-    req.session.toDo.push({"name":req.body.name, "id":req.session.curId});
-    req.session.curId++;
-    console.log(req);
-  }
-
-  if(req.body['Done']){
-    req.session.toDo = req.session.toDo.filter(function(e){
-      return e.id != req.body.id;
-    })
-  }
-
-  context.name = req.session.name;
-  context.toDoCount = req.session.toDo.length;
-  context.toDo = req.session.toDo;
-  console.log(context.toDo);
-  res.render('toDo',context);
+  context.username = req.session.username;
+  //context.toDoCount = req.session.toDo.length;
+  pool.query('SELECT * FROM workout', function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+    context.results = rows;
+    console.log(context);
+    res.render('toDo', context);
+  });
 });
 
 
-app.get('/',function(req,res,next){
-  var context = {};
-  //If there is no session, go to the main page.
-  if(!req.session.name){
-    res.render('newSession', context);
-    return;
-  }
-  context.name = req.session.name;
-  context.toDoCount = req.session.toDo.length || 0;
-  context.toDo = req.session.toDo || [];
-  console.log(context.toDo);
-  res.render('toDo',context);
-});
-
-app.post('/addRow',function(req,res){
+app.post('/addRow',function(req,res, next){
   res.type('text/plain');
   var context = {};
-  console.log("hi");
   console.log(req.body);
-  res.send(req.body);
+  pool.query("INSERT INTO workout (`name`, `reps`, `weight`, `workoutDate`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.lbs], function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+    context.results = "Inserted id " + result.insertId;
+    //res.render('home',context);
+    console.log("hi");
+
+    req.body.id = result.insertId;
+    console.log(req.body.id);
+    res.send(req.body);
+  });
+
 });
 
 

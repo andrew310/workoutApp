@@ -55,7 +55,7 @@ function bindButton(){
         cell3.innerHTML = results.weight;
         cell4.innerHTML = results.date;
         cell5.innerHTML = results.lbs;
-        cell6.innerHTML = "<input type=\"button\" value=\"delete\" onclick=\"deleteRow(\'workoutNav\',this)\" />";
+        cell6.innerHTML = "<input type=\"button\" value=\"delete\" onclick=\"deleteRow(\'workoutNav\',this, " + results.id +")\" />";
         cell7.innerHTML = "<input type=\"button\" value=\"Delete\" onclick=\"\" />";
 
         //document.getElementById('echofName').textContent = results.json.name;
@@ -64,7 +64,8 @@ function bindButton(){
     })
 }
 //deleteRow function
-function deleteRow(tableID,currentRow) {
+function deleteRow(tableID,currentRow, rowID) {
+    alert(rowID);
     try {
         var table = document.getElementById(tableID);
         var rowCount = table.rows.length;

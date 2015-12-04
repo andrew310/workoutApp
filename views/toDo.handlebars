@@ -4,7 +4,7 @@
     <title>Workout Sessions Page</title>
     <script src="/js/script.js"></script>
 <body>
-<h1>Hello {{name}} Here is your workout information!</h1>
+<h1>Hello {{username}} Here is your workout information!</h1>
 <h2>You have {{toDoCount}} workout sessions.</h2>
 <form >
     <fieldset>
@@ -28,22 +28,14 @@
             <th></th>
             <th></th>
         </tr>
-        {{#if toDo}}
-            {{#each toDo}}
+        {{#if results}}
+            {{#each results}}
                 <tr>
                     <th>{{this.name}}</th>
                     <th>{{this.reps}}</th>
                     <th>{{this.weight}}</th>
                     <th>{{this.date}}</th>
                     <th>{{this.lbs}}</th>
-                    <th><form method="post">
-                        <input type="hidden" name="id" value="{{this.id}}">
-                        <input type="submit" name="Done" value="Update">
-                    </form></th>
-                    <th><form method="post">
-                        <input type="hidden" name="id" value="{{this.id}}">
-                        <input type="submit" name="Done" value="Delete">
-                    </form></th>
                 </tr>
             {{/each}}
         {{/if}}
