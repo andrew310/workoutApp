@@ -103,20 +103,8 @@ app.post('/addRow',function(req,res, next){
 });
 
 //update handler, receives uniqueID from AJAX
-app.post('/update',function(req,res, next){
-  var context = {};
-  console.log(req.body)
-
-
-  pool.query('SELECT * FROM workout WHERE ID=?', [req.body.id], function(err, rows, fields) {
-    if (err) {
-      next(err);
-      return;
-    }
-    context.results = rows;
-    console.log(context.results);
-    res.render('updateRow', context);
-  });
+app.get('/update',function(req,res){
+  res.render('updateRow');
 });
 
 //deleteRow handler, receives uniqueID from AJAX

@@ -56,30 +56,13 @@ function bindButton(){
         cell4.innerHTML = results.date;
         cell5.innerHTML = results.lbs;
         cell6.innerHTML = "<input type=\"button\" value=\"delete\" onclick=\"deleteRow(\'workoutNav\',this, " + results.id +")\" />";
-        cell7.innerHTML = "<input type=\"button\" value=\"update\" onclick=\"deleteRow(\'workoutNav\',this, " + results.id +")\" />";
+        cell7.innerHTML = "<form action=\"/update\" method=\"get\"><input id=\""+ results.id + "\" type=\"hidden\" name=\"changeData\"><input type=\"submit\" value=\"update\"></form>";
 
         //document.getElementById('echofName').textContent = results.json.name;
         //document.getElementById('echolName').textContent = results.json.reps;
         event.preventDefault();
     })
 }
-
-//deleteRow function
-function updateRow(tableID,currentRow, rowID) {
-    alert(rowID);
-    var payload = JSON.stringify({
-        id: rowID,
-    });
-
-    var postReq = new XMLHttpRequest();
-    //open url REMEMBER TO CONVERT TO ASYNCHRONOUS
-    postReq.open('POST', '/update', false);
-    //set header to json=true
-    postReq.setRequestHeader('Content-Type', 'application/json');
-    postReq.send(payload);
-    //alert(postReq.statusText);
-}
-
 
 
 //deleteRow function
