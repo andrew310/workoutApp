@@ -65,6 +65,17 @@ function bindButton(){
 }
 //deleteRow function
 function deleteRow(tableID,currentRow, rowID) {
+    var payload = JSON.stringify({id: rowID});
+    var postReq = new XMLHttpRequest();
+    //open url REMEMBER TO CONVERT TO ASYNCHRONOUS
+    postReq.open('POST', '/deleteRow', false);
+    //set header to json=true
+    postReq.setRequestHeader('Content-Type', 'application/json');
+    postReq.send(payload);
+    alert(postReq.statusText);
+    console.log(postReq.statusText);
+    console.log(postReq.responseText);
+
     alert(rowID);
     try {
         var table = document.getElementById(tableID);

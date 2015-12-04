@@ -102,6 +102,26 @@ app.post('/addRow',function(req,res, next){
 
 });
 
+app.post('/deleteRow',function(req,res, next){
+  res.type('text/plain');
+  var context = {};
+  console.log(req.body);
+  pool.query("DELETE FROM workout  WHERE id=?", [req.body.id], function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+    context.results = "deleted id " + result;
+    //res.render('home',context);
+    console.log("hi");
+
+    res.results = context.results;
+    console.log(res.results);
+    res.send(res.results);
+  });
+
+});
+
 
 app.use(function(req,res){
   res.status(404);
