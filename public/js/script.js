@@ -34,6 +34,8 @@ function bindButton(){
         console.log(postReq.statusText);
         console.log(postReq.responseText);
 
+
+
         //convert responseText to JSON and set the values to show up in their respective fields
         var results = JSON.parse(postReq.responseText);
         //update table with results from the server (it sends back the same data, but ensures it is valid per database standards
@@ -56,7 +58,9 @@ function bindButton(){
         cell4.innerHTML = results.date;
         cell5.innerHTML = results.lbs;
         cell6.innerHTML = "<input type=\"button\" value=\"delete\" onclick=\"deleteRow(\'workoutNav\',this, " + results.id +")\" />";
-        cell7.innerHTML = "<form action=\"/update\" method=\"get\"><input name=\""+ results.id + "\" type=\"hidden\" name=\"changeData\"><input type=\"submit\" value=\"update\"></form>";
+        cell7.innerHTML = "<form action=\"update\" method=\"get\"/><input value=\""+ results.id +"\" name=\"changeData\" type=\"hidden\"/><input type=\"submit\" value=\"update\"/></form>";
+        var workoutCount = table.rows.length-1;
+        document.getElementById("count").innerHTML = workoutCount;
 
         //document.getElementById('echofName').textContent = results.json.name;
         //document.getElementById('echolName').textContent = results.json.reps;
@@ -91,6 +95,8 @@ function deleteRow(tableID,currentRow, rowID) {
                     break;
                 }
                 table.deleteRow(i);
+                var workoutCount = table.rows.length-1;
+                document.getElementById("count").innerHTML = workoutCount;
                 rowCount--;
                 i--;
             }

@@ -75,6 +75,7 @@ app.post('/',function(req,res){
       return;
     }
     context.results = rows;
+    context.count = rows.length;
     console.log(context);
     res.render('toDo', context);
   });
@@ -136,6 +137,7 @@ app.post('/update',function(req,res, next){
     }
     context.username = req.session.name;
     context.results = rows;
+    context.count = rows.length;
     console.log(context);
     res.render('toDo', context);
   });
