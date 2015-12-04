@@ -83,7 +83,7 @@ app.post('/addRow',function(req,res){
   var context = {};
   console.log("hi");
   console.log(req.body);
-  res.send('OK');
+  res.send(req.body);
 });
 
 

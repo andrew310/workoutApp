@@ -18,38 +18,36 @@
     </fieldset>
 </form>
 
-
-  <table>
-    <tr>
-        <th>Name</th>
-        <th>Reps</th>
-        <th>Weight</th>
-        <th>Date</th>
-        <th>Lbs</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {{#if toDo}}
-      {{#each toDo}}
+    <table id="workoutNav">
         <tr>
-            <th>{{this.name}}</th>
-            <th>{{this.reps}}</th>
-            <th>{{this.weight}}</th>
-            <th>{{this.date}}</th>
-            <th>{{this.lbs}}</th>
-            <th><form method="post">
-                <input type="hidden" name="id" value="{{this.id}}">
-                <input type="submit" name="Done" value="Update">
-            </form></th>
-            <th><form method="post">
-                <input type="hidden" name="id" value="{{this.id}}">
-                <input type="submit" name="Done" value="Delete">
-            </form></th>
+            <th>Name</th>
+            <th>Reps</th>
+            <th>Weight</th>
+            <th>Date</th>
+            <th>Lbs</th>
+            <th></th>
+            <th></th>
         </tr>
-      {{/each}}
-    {{/if}}
-  </table>
-
+        {{#if toDo}}
+            {{#each toDo}}
+                <tr>
+                    <th>{{this.name}}</th>
+                    <th>{{this.reps}}</th>
+                    <th>{{this.weight}}</th>
+                    <th>{{this.date}}</th>
+                    <th>{{this.lbs}}</th>
+                    <th><form method="post">
+                        <input type="hidden" name="id" value="{{this.id}}">
+                        <input type="submit" name="Done" value="Update">
+                    </form></th>
+                    <th><form method="post">
+                        <input type="hidden" name="id" value="{{this.id}}">
+                        <input type="submit" name="Done" value="Delete">
+                    </form></th>
+                </tr>
+            {{/each}}
+        {{/if}}
+    </table>
 
 </body>
 </html>
