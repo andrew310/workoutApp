@@ -69,7 +69,6 @@ app.post('/',function(req,res){
   }
 
   context.username = req.session.username;
-  //context.toDoCount = req.session.toDo.length;
   pool.query('SELECT * FROM workout', function(err, rows, fields) {
     if (err) {
       next(err);
@@ -103,6 +102,23 @@ app.post('/addRow',function(req,res, next){
 
 });
 
+//update handler, receives uniqueID from AJAX
+app.post('/update',function(req,res, next){
+  var context = {};
+  console.log(req.body)
+
+
+  pool.query('SELECT * FROM workout WHERE ID=?', [req.body.id], function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+    context.results = rows;
+    console.log(context.results);
+    res.render('updateRow', context);
+  });
+});
+
 //deleteRow handler, receives uniqueID from AJAX
 app.post('/deleteRow',function(req,res, next){
   res.type('text/plain');
@@ -112,10 +128,10 @@ app.post('/deleteRow',function(req,res, next){
   pool.query("DELETE FROM workout  WHERE id=?", [req.body.id], function(err, result){
     if(err){
       next(err);
+      console.log(err);
       return;
     }
     context.results = "deleted id " + result;
-    //res.render('home',context);
     console.log("hi");
 
     res.results = context.results;

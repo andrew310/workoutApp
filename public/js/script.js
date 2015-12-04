@@ -73,11 +73,11 @@ function updateRow(tableID,currentRow, rowID) {
 
     var postReq = new XMLHttpRequest();
     //open url REMEMBER TO CONVERT TO ASYNCHRONOUS
-    postReq.open('POST', '/updateRow', false);
+    postReq.open('POST', '/update', false);
     //set header to json=true
     postReq.setRequestHeader('Content-Type', 'application/json');
     postReq.send(payload);
-    alert(postReq.statusText);
+    //alert(postReq.statusText);
 }
 
 
