@@ -3,17 +3,47 @@ var express = require('express');
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var session = require('express-session');
-var bodyParser = require('body-parser');
 
+var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(session({secret:'SuperSecretPassword'}));
 app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 3000);
+app.set('port', 3020);
 
+//connect to database
+var mysql = require('mysql');
+var pool = mysql.createPool({
+  host  : 'localhost',
+  user  : 'student',
+  password: 'default',
+  database: 'student'
+});
+
+//set up the table
+app.get('/reset-table',function(req,res,next){
+  var context = {};
+  mysql.pool.query("DROP TABLE IF EXISTS todo", function(err){
+    var createString = "CREATE TABLE todo(" +
+        "id INT PRIMARY KEY AUTO_INCREMENT," +
+        "name VARCHAR(255) NOT NULL," +
+        "reps int," +
+        "weight int," +
+        "date DATE," +
+        "lbs BOOLEAN)";
+    mysql.pool.query(createString, function(err){
+      context.results = "Table reset";
+      res.render('home',context);
+    })
+  });
+});
+
+
+//main page
 app.get('/',function(req,res,next){
   var context = {};
   //If there is no session, go to the main page.
