@@ -81,11 +81,12 @@ app.post('/',function(req,res){
   });
 });
 
-
+//addRow handler, receives fields for all workout values
 app.post('/addRow',function(req,res, next){
   res.type('text/plain');
   var context = {};
   console.log(req.body);
+  //query to insert values into table
   pool.query("INSERT INTO workout (`name`, `reps`, `weight`, `workoutDate`, `lbs`) VALUES (?, ?, ?, ?, ?)", [req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.lbs], function(err, result){
     if(err){
       next(err);
@@ -102,10 +103,12 @@ app.post('/addRow',function(req,res, next){
 
 });
 
+//deleteRow handler, receives uniqueID from AJAX
 app.post('/deleteRow',function(req,res, next){
   res.type('text/plain');
   var context = {};
   console.log(req.body);
+  //create query to drop row containing ID received
   pool.query("DELETE FROM workout  WHERE id=?", [req.body.id], function(err, result){
     if(err){
       next(err);
